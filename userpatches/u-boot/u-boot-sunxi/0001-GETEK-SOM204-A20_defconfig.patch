@@ -1,6 +1,6 @@
 diff --git a/configs/GETEK-SOM204-A20_defconfig b/configs/GETEK-SOM204-A20_defconfig
 new file mode 100644
-index 00000000..c25f8a6f
+index 00000000..6c50daf2
 --- /dev/null
 +++ b/configs/GETEK-SOM204-A20_defconfig
 @@ -0,0 +1,37 @@
@@ -24,7 +24,7 @@ index 00000000..c25f8a6f
 +# CONFIG_CMD_FLASH is not set
 +# CONFIG_SPL_DOS_PARTITION is not set
 +# CONFIG_SPL_PARTITION_UUIDS is not set
-+CONFIG_DEFAULT_DEVICE_TREE="sun7i-a20-getek-som204"
++CONFIG_DEFAULT_DEVICE_TREE="sun7i-getek-som204-a20"
 +CONFIG_SCSI_AHCI=y
 +CONFIG_FASTBOOT_CMD_OEM_FORMAT=y
 +CONFIG_PHY_ADDR=3

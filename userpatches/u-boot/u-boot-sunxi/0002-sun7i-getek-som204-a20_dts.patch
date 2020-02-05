@@ -1,8 +1,8 @@
-diff --git a/arch/arm/dts/sun7i-a20-getek-som204.dts b/arch/arm/dts/sun7i-a20-getek-som204.dts
+diff --git a/arch/arm/dts/sun7i-getek-som204-a20.dts b/arch/arm/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
 index 00000000..d46359d5
 --- /dev/null
-+++ b/arch/arm/dts/sun7i-a20-getek-som204.dts
++++ b/arch/arm/dts/sun7i-getek-som204-a20.dts
 @@ -0,0 +1,335 @@
 +/dts-v1/;
 +#include "sun7i-a20.dtsi"
