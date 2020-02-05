@@ -1,0 +1,8 @@
+# A20 dual core 1Gb SoC dual ethernet
+BOARD_NAME="GETEK-SOM204"
+BOARDFAMILY="sun7i"
+BOOTCONFIG="GETEK-SOM204-A20_defconfig"
+MODULES_CURRENT=" "
+MODULES_DEV=" "
+SERIALCON="ttyS0"
+KERNEL_TARGET="current,dev"
