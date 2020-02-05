@@ -1,0 +1,12 @@
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 1246cead..29021f26 100755
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -451,6 +451,7 @@ dtb-$(CONFIG_MACH_SUN7I) += \
+ 	sun7i-a20-olimex-som-evb.dtb \
+ 	sun7i-a20-olimex-som204-evb.dtb \
+ 	sun7i-a20-olimex-som204-evb-emmc.dtb \
++	sun7i-getek-som204-a20.dtb \
+ 	sun7i-a20-olinuxino-lime.dtb \
+ 	sun7i-a20-olinuxino-lime2.dtb \
+ 	sun7i-a20-olinuxino-lime2-emmc.dtb \
