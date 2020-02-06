@@ -1,9 +1,9 @@
 diff --git a/arch/arm/dts/sun7i-getek-som204-a20.dts b/arch/arm/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 00000000..d46359d5
+index 00000000..e0c78c57
 --- /dev/null
 +++ b/arch/arm/dts/sun7i-getek-som204-a20.dts
-@@ -0,0 +1,335 @@
+@@ -0,0 +1,277 @@
 +/dts-v1/;
 +#include "sun7i-a20.dtsi"
 +#include "sunxi-common-regulators.dtsi"
@@ -19,11 +19,8 @@ index 00000000..d46359d5
 +
 +	aliases {
 +		serial0 = &uart0;
-+		serial1 = &uart4;
-+		serial2 = &uart7;
 +		spi0 = &spi1;
 +		spi1 = &spi2;
-+		ethernet1 = &rtl8723bs;
 +	};
 +
 +	chosen {
@@ -74,17 +71,6 @@ index 00000000..d46359d5
 +	};
 +};
 +
-+&ahci {
-+	target-supply = <&reg_ahci_5v>;
-+	status = "okay";
-+};
-+
-+&can0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&can_ph_pins>;
-+	status = "okay";
-+};
-+
 +&codec {
 +	status = "okay";
 +};
@@ -98,10 +84,6 @@ index 00000000..d46359d5
 +};
 +
 +&ehci0 {
-+	status = "okay";
-+};
-+
-+&ehci1 {
 +	status = "okay";
 +};
 +
@@ -153,34 +135,11 @@ index 00000000..d46359d5
 +	};
 +};
 +
-+/* Exposed to UEXT2 */
-+&i2c2 {
-+	status = "okay";
-+};
-+
-+&ir0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&ir0_rx_pin>;
-+	status = "okay";
-+};
-+
 +&mmc0 {
 +	vmmc-supply = <&reg_vcc3v3>;
 +	bus-width = <4>;
 +	cd-gpios = <&pio 7 1 GPIO_ACTIVE_LOW>;
 +	status = "okay";
-+};
-+
-+&mmc3 {
-+	vmmc-supply = <&reg_vcc3v3>;
-+	mmc-pwrseq = <&rtl_pwrseq>;
-+	bus-width = <4>;
-+	non-removable;
-+	status = "okay";
-+
-+	rtl8723bs: sdio_wifi@1 {
-+		reg = <1>;
-+	};
 +};
 +
 +&ohci0 {
@@ -195,13 +154,6 @@ index 00000000..d46359d5
 +	status = "okay";
 +};
 +
-+&pio {
-+	uart3_rts_pin: uart3-rts-pin {
-+		pins = "PG8";
-+		function = "uart3";
-+	};
-+};
-+
 +#include "axp209.dtsi"
 +
 +&ac_power_supply {
@@ -209,11 +161,6 @@ index 00000000..d46359d5
 +};
 +
 +&battery_power_supply {
-+	status = "okay";
-+};
-+
-+&reg_ahci_5v {
-+	gpio = <&pio 2 3 GPIO_ACTIVE_HIGH>;
 +	status = "okay";
 +};
 +
@@ -270,6 +217,16 @@ index 00000000..d46359d5
 +	pinctrl-0 = <&spi1_pi_pins>,
 +		    <&spi1_cs0_pi_pin>;
 +	status = "okay";
++	
++	
++	#address-cells = <1>;
++	#size-cells = <0>;
++	spidev@0 {
++		compatible = "spidev";
++		reg = <0>;
++		spi-max-frequency = <100000000>;
++		status = "okay";
++	};
 +};
 +
 +/* Exposed to UEXT2 */
@@ -278,32 +235,17 @@ index 00000000..d46359d5
 +	pinctrl-0 = <&spi2_pc_pins>,
 +		    <&spi2_cs0_pc_pin>;
 +	status = "okay";
++
++	tpm@0 {
++		compatible = "infineon,slb9670", "tcg,tpm_tis-spi";
++		reg = <0>;
++		spi-max-frequency = <10000000>;
++	};
 +};
 +
 +&uart0 {
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&uart0_pb_pins>;
-+	status = "okay";
-+};
-+
-+/* Used for RTL8723BS bluetooth */
-+&uart3 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart3_pg_pins>, <&uart3_rts_pin>;
-+	status = "okay";
-+};
-+
-+/* Exposed to UEXT1 */
-+&uart4 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart4_pg_pins>;
-+	status = "okay";
-+};
-+
-+/* Exposed to UEXT2 */
-+&uart7 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart7_pi_pins>;
 +	status = "okay";
 +};
 +
