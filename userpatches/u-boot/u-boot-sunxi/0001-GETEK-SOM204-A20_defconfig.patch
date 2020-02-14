@@ -1,9 +1,9 @@
 diff --git a/configs/GETEK-SOM204-A20_defconfig b/configs/GETEK-SOM204-A20_defconfig
 new file mode 100644
-index 00000000..6c50daf2
+index 00000000..a3666038
 --- /dev/null
 +++ b/configs/GETEK-SOM204-A20_defconfig
-@@ -0,0 +1,37 @@
+@@ -0,0 +1,103 @@
 +CONFIG_ARM=y
 +CONFIG_ARCH_SUNXI=y
 +CONFIG_NR_DRAM_BANKS=1
@@ -41,3 +41,69 @@ index 00000000..6c50daf2
 +CONFIG_USB_OHCI_HCD=y
 +CONFIG_USB_MUSB_GADGET=y
 +CONFIG_SYS_USB_EVENT_POLL_VIA_INT_QUEUE=y
++
++# CONFIG_VIDEO_SUNXI is not set
++# CONFIG_VIDEO_HDMI is not set
++CONFIG_VIDEO_LCD_MODE=x:480,y:272,depth:18,pclk_khz:9000,le:10,ri:5,up:3,lo:8,hs:30,vs:5,sync:3,vmode:0
++CONFIG_VIDEO_LCD_DCLK_PHASE=1
++CONFIG_VIDEO_LCD_POWER="PC24"
++CONFIG_VIDEO_LCD_BL_PWM="PB2"
++
++# CONFIG_SATAPWR is not set
++
++CONFIG_LOCALVERSION=-getek
++
++CONFIG_BOOTDELAY=0
++
++CONFIG_IDENT_STRING=GETEK
++# CONFIG_DISPLAY_CPUINFO is not set
++# CONFIG_DISPLAY_BOARDINFO is not set
++
++# CONFIG_CMD_SCSI is not set
++# CONFIG_CMD_USB is not set
++# CMD_NET is not set
++# CONFIG_CMD_PXE is not set
++# CONFIG_NET is not set
++# CONFIG_AHCI is not set
++# CONFIG_SCSI_AHCI is not set
++# CONFIG_SUNXI_AHCI is not set
++# CONFIG_PHYLIB is not set
++# CONFIG_PHY_ADDR_ENABLE is not set
++# CONFIG_PHY_MICREL is not set
++# CONFIG_PHY_MICREL_KSZ90X1 is not set
++# CONFIG_DM_ETH is not set
++# CONFIG_NETDEVICES is not set
++# CONFIG_PHY_GIGE is not set
++# CONFIG_ETH_DESIGNWARE is not set
++# CONFIG_RGMII is not set
++# CONFIG_MII is not set
++# CONFIG_SUN7I_GMAC is not set
++# CONFIG_PHY is not set
++# CONFIG_PHY_SUN4I_USB is not set
++# CONFIG_SCSI is not set
++# CONFIG_DM_SCSI is not set
++# CONFIG_USB is not set
++# CONFIG_DM_USB is not set
++# CONFIG_USB_EHCI_HCD is not set
++# CONFIG_USB_EHCI_GENERIC is not set
++# CONFIG_USB_OHCI_HCD is not set
++# CONFIG_USB_OHCI_GENERIC is not set
++# CONFIG_USB_MUSB_GADGET is not set
++# CONFIG_USB_MUSB_SUNXI is not set
++# CONFIG_USB_MUSB_DISABLE_BULK_COMBINE_SPLIT is not set
++# CONFIG_USB_MUSB_PIO_ONLY is not set
++# CONFIG_USB_STORAGE is not set
++# CONFIG_USB_KEYBOARD is not set
++# SYS_USB_EVENT_POLL_VIA_INT_QUEUE is not set
++# CONFIG_USB_GADGET is not set
++CONFIG_USB_GADGET_MANUFACTURER=GETEK
++# CONFIG_USB_GADGET_DOWNLOAD is not set
++# CONFIG_USB_ETHER is not set
++
++# CONFIG_SYS_WHITE_ON_BLACK is not set
++# CONFIG_VIDEO is not set
++# CONFIG_CFB_CONSOLE is not set
++# CONFIG_CFB_CONSOLE_ANSI is not set
++# CONFIG_VGA_AS_SINGLE_DEVICE is not set
++# CONFIG_VIDEO_SW_CURSOR is not set
++# CONFIG_VIDEO_DT_SIMPLEFB is not set

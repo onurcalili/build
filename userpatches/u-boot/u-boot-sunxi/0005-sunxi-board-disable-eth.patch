@@ -1,0 +1,21 @@
+diff --git a/board/sunxi/board.c b/board/sunxi/board.c
+index 8200ed91..887f79f9 100644
+--- a/board/sunxi/board.c
++++ b/board/sunxi/board.c
+@@ -802,7 +802,7 @@ static void setup_environment(const void *fdt)
+     !defined(CONFIG_MACH_SUN8I_A23) && !defined(CONFIG_MACH_SUN8I_A33)
+ 		sid[3] = crc32(0, (unsigned char *)&sid[1], 12);
+ #endif
+-
++#ifdef CONFIG_NET
+ 		/* Ensure the NIC specific bytes of the mac are not all 0 */
+ 		if ((sid[3] & 0xffffff) == 0)
+ 			sid[3] |= 0x800000;
+@@ -830,6 +830,7 @@ static void setup_environment(const void *fdt)
+ 
+ 			eth_env_set_enetaddr(ethaddr, mac_addr);
+ 		}
++#endif
+ 
+ 		if (!env_get("serial#")) {
+ 			snprintf(serial_string, sizeof(serial_string),
