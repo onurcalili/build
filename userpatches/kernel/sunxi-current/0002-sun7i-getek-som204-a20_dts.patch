@@ -1,9 +1,9 @@
 diff --git a/arch/arm/boot/dts/sun7i-getek-som204-a20.dts b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 000000000..3107267d7
+index 000000000..fc04b6db3
 --- /dev/null
 +++ b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
-@@ -0,0 +1,324 @@
+@@ -0,0 +1,359 @@
 +/dts-v1/;
 +#include "sun7i-a20.dtsi"
 +#include "sunxi-common-regulators.dtsi"
@@ -70,24 +70,44 @@ index 000000000..3107267d7
 +		reset-gpios = <&pio 2 16 GPIO_ACTIVE_LOW>;
 +	};
 +
-+	lcd_backlight: lcd_backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pwm 0 50000 PWM_POLARITY_INVERTED>;
-+			brightness-levels = <0 10 20 30 40 50 60 70 80 90 100>;
-+			default-brightness-level = <8>;
++	reg_axp_ipsout: axp_ipsout {
++		compatible = "regulator-fixed";
++		regulator-name = "axp-ipsout";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-always-on;
 +	};
 +
-+	panel: panel {
++	lcd_backlight: lcd_backlight {
++		compatible = "pwm-backlight";
++		power-supply = <&reg_axp_ipsout>;
++		pwms = <&pwm 0 50000 1>;
++		brightness-levels = <0 10 20 30 40 50 60 70 80 90 100>;
++		default-brightness-level = <8>;
++	};
++	
++	panel {
 +		compatible = "satoz,sat043at40d09rh";
-+		backlight = <&lcd_backlight>;
-+		enable-gpios = <&axp_gpio 0 GPIO_ACTIVE_HIGH>;
-+		pinctrl-names = "default";
 +		#address-cells = <1>;
 +		#size-cells = <0>;
-+		port {
-+			lcd_in_tcon0: endpoint {
++		pinctrl-names = "default";
++		pinctrl-0 = <&lcd0_rgb888_pins>, <&lcd_power_pin_som204>;
++		status = "okay";
++
++		enable-gpios = <&pio 2 24 0>;
++		power-supply = <&reg_axp_ipsout>;
++
++		backlight = <&lcd_backlight>;
++
++		port@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++
++			panel_input: endpoint@0 {
++				reg = <0>;
 +				remote-endpoint = <&tcon0_out_lcd>;
-+				};
++			};
 +		};
 +	};
 +};
@@ -312,6 +332,21 @@ index 000000000..3107267d7
 +/delete-node/ &tcon0_out_hdmi;
 +/delete-node/ &hdmi_in_tcon0;
 +
++&pio {
++	lcd_power_pin_som204: lcd_power_pin@0 {
++		pins = "PC24";
++		function = "gpio_out";
++	};
++
++	lcd0_rgb888_pins: lcd0_rgb888_pins@0 {
++		pins = "PD0", "PD1", "PD2", "PD3", "PD4", "PD5", "PD6", "PD7",
++			"PD8", "PD9", "PD10", "PD11", "PD12", "PD13", "PD14", "PD15",
++			"PD16", "PD17", "PD18", "PD19", "PD20", "PD21", "PD22", "PD23",
++			"PD24", "PD25", "PD26", "PD27";
++		function = "lcd0";
++	};
++};
++
 +&pwm {
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&pwm0_pin>;
@@ -319,10 +354,10 @@ index 000000000..3107267d7
 +};
 +
 +&tcon0_out {
-+	tcon0_out_lcd: endpoint@1 {
-+		reg = <1>;
-+		remote-endpoint = <&lcd_in_tcon0>;
-+		allwinner,tcon-channel = <1>;
++	tcon0_out_lcd: endpoint@0 {
++		reg = <0>;
++		remote-endpoint = <&panel_input>;
++		allwinner,tcon-channel = <0>;
 +	};
 +};
 +
