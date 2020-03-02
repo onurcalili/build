@@ -99,20 +99,14 @@ compilation_prepare()
 
 
 
-	# WireGuard - fast, modern, secure VPN tunnel
-	if linux-version compare $version ge 3.14 && [ "${WIREGUARD}" == yes ]; then
+	# WireGuard VPN for Linux 3.10 - 5.5
+	if linux-version compare $version ge 3.10 && linux-version compare $version le 5.5 && [ "${WIREGUARD}" == yes ]; then
 
 		# attach to specifics tag or branch
-		#local wirever="branch:master"
-		local wirever="tag:0.0.20191219"
+		local wirever="branch:master"
 
-		display_alert "Adding" "WireGuard ${wirever} " "info"
-
-		fetch_from_repo "https://git.zx2c4.com/wireguard-monolithic-historical" "wireguard" "${wirever}" "yes"
-
-		#if linux-version compare $version gt 5.6; then
-		#	fetch_from_repo "https://git.zx2c4.com/wireguard-linux" "wireguard" "stable" "yes"
-		#fi
+		display_alert "Adding" "WireGuard VPN for Linux 3.10 - 5.5 ${wirever} " "info"
+		fetch_from_repo "https://git.zx2c4.com/wireguard-linux-compat" "wireguard" "${wirever}" "yes"
 
 		cd ${SRC}/cache/sources/${LINUXSOURCEDIR}
 		rm -rf ${SRC}/cache/sources/${LINUXSOURCEDIR}/net/wireguard
@@ -142,7 +136,7 @@ compilation_prepare()
 	if linux-version compare $version ge 3.14 && [ "$EXTRAWIFI" == yes ]; then
 
 		# attach to specifics tag or branch
-		local rtl8812auver="branch:v5.2.20"
+		local rtl8812auver="branch:v5.6.4.2"
 
 		display_alert "Adding" "Wireless drivers for Realtek 8811, 8812, 8814 and 8821 chipsets ${rtl8812auver}" "info"
 
@@ -159,14 +153,8 @@ compilation_prepare()
 		cp ${SRC}/cache/sources/rtl8812au/${rtl8812auver#*:}/Kconfig \
 		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8812au/Kconfig
 
-		# Adjust path
-		sed -i 's/include $(src)\/hal\/phydm\/phydm.mk/include $(TopDIR)\/drivers\/net\/wireless\/rtl8812au\/hal\/phydm\/phydm.mk/' \
-		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8812au/Makefile
-		sed -i 's/include $(TopDIR)\/hal\/phydm\/phydm.mk/include $(TopDIR)\/drivers\/net\/wireless\/rtl8812au\/hal\/phydm\/phydm.mk/' \
-		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8812au/Makefile
-
 		# Add to section Makefile
-		echo "obj-\$(CONFIG_RTL8812AU) += rtl8812au/" >> $SRC/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/Makefile
+		echo "obj-\$(CONFIG_88XXAU) += rtl8812au/" >> $SRC/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/Makefile
 		sed -i '/source "drivers\/net\/wireless\/ti\/Kconfig"/a source "drivers\/net\/wireless\/rtl8812au\/Kconfig"' \
 		$SRC/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/Kconfig
 
@@ -219,6 +207,13 @@ compilation_prepare()
 		cp ${SRC}/cache/sources/rtl8811cu/${rtl8811cuver#*:}/Kconfig \
 		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8811cu/Kconfig
 
+		# Disable debug
+		sed -i "s/^CONFIG_RTW_DEBUG.*/CONFIG_RTW_DEBUG = n/" ${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8811cu/Makefile
+
+		cd ${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8811cu/
+		process_patch_file "${SRC}/patch/misc/wireless-fail-if-debug-is-disabled.patch"                "applying"
+		cd ${SRC}/cache/sources/${LINUXSOURCEDIR}
+
 		# Address ARM related bug https://github.com/aircrack-ng/rtl8812au/issues/233
 		sed -i "s/^CONFIG_MP_VHT_HW_TX_MODE.*/CONFIG_MP_VHT_HW_TX_MODE = n/" \
 		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8811cu/Makefile
@@ -238,22 +233,26 @@ compilation_prepare()
 	if linux-version compare $version ge 3.14 && [ "$EXTRAWIFI" == yes ]; then
 
 		# attach to specifics tag or branch
-		local rtl8811euver="branch:v5.3.9"
+		local rtl8188euver="branch:v5.7.6.1"
 
 		display_alert "Adding" "Wireless drivers for Realtek 8188EU 8188EUS and 8188ETV chipsets ${rtl8811euver}" "info"
 
-		fetch_from_repo "https://github.com/aircrack-ng/rtl8188eus" "rtl8188eu" "${rtl8811euver}" "yes"
+		fetch_from_repo "https://github.com/aircrack-ng/rtl8188eus" "rtl8188eu" "${rtl8188euver}" "yes"
 		cd ${SRC}/cache/sources/${LINUXSOURCEDIR}
 		rm -rf ${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8188eu
 		mkdir -p ${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8188eu/
-		cp -R ${SRC}/cache/sources/rtl8188eu/${rtl8811euver#*:}/{core,hal,include,os_dep,platform} \
+		cp -R ${SRC}/cache/sources/rtl8188eu/${rtl8188euver#*:}/{core,hal,include,os_dep,platform} \
 		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8188eu
 
 		# Makefile
-		cp ${SRC}/cache/sources/rtl8188eu/${rtl8811euver#*:}/Makefile \
+		cp ${SRC}/cache/sources/rtl8188eu/${rtl8188euver#*:}/Makefile \
 		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8188eu/Makefile
-		cp ${SRC}/cache/sources/rtl8188eu/${rtl8811euver#*:}/Kconfig \
+		cp ${SRC}/cache/sources/rtl8188eu/${rtl8188euver#*:}/Kconfig \
 		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8188eu/Kconfig
+
+		# Disable debug
+		sed -i "s/^CONFIG_RTW_DEBUG.*/CONFIG_RTW_DEBUG = n/" ${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl8188eu/Makefile
+		process_patch_file "${SRC}/patch/misc/wireless-rtl8188eu-disable-efuse.patch"                "applying"
 
 		# Add to section Makefile
 		echo "obj-\$(CONFIG_RTL8188EU) += rtl8188eu/" >> $SRC/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/Makefile
@@ -290,6 +289,12 @@ compilation_prepare()
 		# Adjust path
 		sed -i 's/include $(src)\/rtl8822b.mk /include $(TopDIR)\/drivers\/net\/wireless\/rtl88x2bu\/rtl8822b.mk/' \
 		${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl88x2bu/Makefile
+
+                # Disable debug
+		sed -i "s/^CONFIG_RTW_DEBUG.*/CONFIG_RTW_DEBUG = n/" ${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl88x2bu/Makefile
+		cd ${SRC}/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/rtl88x2bu/
+		process_patch_file "${SRC}/patch/misc/wireless-fail-if-debug-is-disabled.patch"                "applying"
+		cd ${SRC}/cache/sources/${LINUXSOURCEDIR}
 
 		# Add to section Makefile
 		echo "obj-\$(CONFIG_RTL8822BU) += rtl88x2bu/" >> $SRC/cache/sources/${LINUXSOURCEDIR}/drivers/net/wireless/Makefile
