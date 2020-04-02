@@ -1,9 +1,9 @@
 diff --git a/arch/arm/boot/dts/sun7i-getek-som204-a20.dts b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 000000000..7021dcc8c
+index 000000000..d9437c44e
 --- /dev/null
 +++ b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
-@@ -0,0 +1,368 @@
+@@ -0,0 +1,360 @@
 +/dts-v1/;
 +#include "sun7i-a20.dtsi"
 +#include "sunxi-common-regulators.dtsi"
@@ -333,15 +333,7 @@ index 000000000..7021dcc8c
 +/delete-node/ &tcon0_out_hdmi;
 +/delete-node/ &hdmi_in_tcon0;
 +
-+&pio {
-+	slb9670_rst_pin_som204: slb9670_rst_pin@0 {
-+		pins = "PG3";
-+		function = "gpio_out";
-+		drive = <SUN4I_PINCTRL_20_MA>;
-+		pull = <SUN4I_PINCTRL_PULL_DOWN>;
-+		bias-pull-down;
-+	};
-+	
++&pio {	
 +	lcd_power_pin_som204: lcd_power_pin@0 {
 +		pins = "PC24";
 +		function = "gpio_out";

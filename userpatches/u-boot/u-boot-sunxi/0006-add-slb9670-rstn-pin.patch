@@ -1,0 +1,25 @@
+diff --git a/board/sunxi/board.c b/board/sunxi/board.c
+index 887f79f9..d81e227f 100644
+--- a/board/sunxi/board.c
++++ b/board/sunxi/board.c
+@@ -216,7 +216,7 @@ static void mmc_pinmux_setup(int sdc);
+ /* add board specific code here */
+ int board_init(void)
+ {
+-	__maybe_unused int id_pfr1, ret, satapwr_pin, macpwr_pin;
++	__maybe_unused int id_pfr1, ret, satapwr_pin, macpwr_pin, slb9670rst_pin;
+ 
+ 	gd->bd->bi_boot_params = (PHYS_SDRAM_0 + 0x100);
+ 
+@@ -285,6 +285,11 @@ int board_init(void)
+ #endif
+ #endif	/* CONFIG_DM_MMC */
+ 
++	/* Drive GETEK SOM204 slb9670 RESETN pin*/
++	slb9670rst_pin = sunxi_name_to_gpio("PG3");
++	gpio_request(slb9670rst_pin, "slb9670rst");
++	gpio_direction_output(slb9670rst_pin, 0);
++
+ 	/* Uses dm gpio code so do this here and not in i2c_init_board() */
+ 	return soft_i2c_board_init();
+ }
