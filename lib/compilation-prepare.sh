@@ -85,7 +85,7 @@ compilation_prepare()
 	#
 	# Older versions have AUFS support with a patch
 
-	if linux-version compare $version ge 5.1 && [ "$AUFS" == yes ]; then
+	if linux-version compare $version ge 5.1 && linux-version compare $version le 5.6 && [ "$AUFS" == yes ]; then
 
 		# attach to specifics tag or branch
 		local aufstag=$(echo ${version} | cut -f 1-2 -d ".")
@@ -290,7 +290,7 @@ compilation_prepare()
 		# attach to specifics tag or branch
 		local rtl8811cuver="branch:master"
 
-		display_alert "Adding" "Wireless drivers for Realtek RTL8811CU and RTL8821C chipsets ${rtl8811euver}" "info"
+		display_alert "Adding" "Wireless drivers for Realtek RTL8811CU and RTL8821C chipsets ${rtl8811cuver}" "info"
 
 		fetch_from_repo "https://github.com/brektrou/rtl8821CU" "rtl8811cu" "${rtl8811cuver}" "yes"
 		cd ${SRC}/cache/sources/${LINUXSOURCEDIR}
