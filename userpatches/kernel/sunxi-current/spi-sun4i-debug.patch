@@ -1,0 +1,16 @@
+diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
+index 3296f24f2..83aadb5b0 100644
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -440,8 +440,11 @@ static int sun4i_spi_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, master);
+ 	sspi = spi_master_get_devdata(master);
++	
++	dev_info(&pdev->dev, "SPI BASE : 0x%X\n", pdev->resource->start);
+ 
+ 	sspi->base_addr = devm_platform_ioremap_resource(pdev, 0);
++	dev_info(&pdev->dev, "Mapped SPI BASE : 0x%X\n", sspi->base_addr);
+ 	if (IS_ERR(sspi->base_addr)) {
+ 		ret = PTR_ERR(sspi->base_addr);
+ 		goto err_free_master;
