@@ -1,9 +1,9 @@
 diff --git a/arch/arm/boot/dts/sun7i-getek-som204-a20.dts b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 000000000..981c3430e
+index 000000000..4e8ad0151
 --- /dev/null
 +++ b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
-@@ -0,0 +1,368 @@
+@@ -0,0 +1,374 @@
 +/dts-v1/;
 +#include "sun7i-a20.dtsi"
 +#include "sunxi-common-regulators.dtsi"
@@ -282,6 +282,12 @@ index 000000000..981c3430e
 +//	allwinner,drive = <SUN4I_PINCTRL_40_MA>;
 +//};
 +
++&spi2_cs0_pc_pin {
++	/* Increase current from to 30mA */
++	allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
++	allwinner,drive = <SUN4I_PINCTRL_30_MA>;
++};
++
 +/* Exposed to UEXT2 */
 +&spi2 {
 +	pinctrl-names = "default";
@@ -294,7 +300,7 @@ index 000000000..981c3430e
 +	slb9670:slb9670@0 {
 +		compatible = "infineon,slb9670";
 +		reg = <0>;
-+		spi-max-frequency = <500000>;
++		spi-max-frequency = <1000000>;
 +		status = "okay";
 +	};
 +};
