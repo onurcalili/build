@@ -1,9 +1,9 @@
 diff --git a/arch/arm/boot/dts/sun7i-getek-som204-a20.dts b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 000000000..44ed4808a
+index 000000000..83849a950
 --- /dev/null
 +++ b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
-@@ -0,0 +1,387 @@
+@@ -0,0 +1,394 @@
 +/dts-v1/;
 +#include "sun7i-a20.dtsi"
 +#include "sunxi-common-regulators.dtsi"
@@ -305,10 +305,17 @@ index 000000000..44ed4808a
 +	#address-cells = <1>;
 +	#size-cells = <0>;
 +
-+	slb9670:slb9670@0 {
-+		compatible = "infineon,slb9670";
++//	slb9670:slb9670@0 {
++//		compatible = "infineon,slb9670";
++//		reg = <0>;
++//		spi-max-frequency = <1000000>;
++//		status = "okay";
++//	};
++
++	spidev@0 {
++		compatible = "spidev";
 +		reg = <0>;
-+		spi-max-frequency = <1000000>;
++		spi-max-frequency = <100000000>;
 +		status = "okay";
 +	};
 +};
