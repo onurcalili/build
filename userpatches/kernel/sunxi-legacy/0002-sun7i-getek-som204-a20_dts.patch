@@ -1,9 +1,9 @@
 diff --git a/arch/arm/boot/dts/sun7i-getek-som204-a20.dts b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 000000000..e595f64c6
+index 000000000..abed33b0a
 --- /dev/null
 +++ b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
-@@ -0,0 +1,401 @@
+@@ -0,0 +1,395 @@
 +/dts-v1/;
 +#include "sun7i-a20.dtsi"
 +#include "sunxi-common-regulators.dtsi"
@@ -277,8 +277,8 @@ index 000000000..e595f64c6
 +/* Exposed to UEXT1 */
 +&spi1 {
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&spi1_pi_pins>,
-+		    <&spi1_cs0_pi_pin>;
++	pinctrl-0 = <&spi1_pins_a>,
++		    <&spi1_cs0_pins_a>;
 +	status = "okay";
 +	#address-cells = <1>;
 +	#size-cells = <0>;
@@ -306,8 +306,8 @@ index 000000000..e595f64c6
 +/* Exposed to UEXT2 */
 +&spi2 {
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&spi2_pc_pins>,
-+		    <&spi2_cs0_pc_pin>;
++	pinctrl-0 = <&spi2_pins_a>,
++		    <&spi2_cs0_pins_a>;
 +	status = "okay";
 +	#address-cells = <1>;
 +	#size-cells = <0>;
@@ -329,7 +329,7 @@ index 000000000..e595f64c6
 +
 +&uart0 {
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&uart0_pb_pins>;
++	pinctrl-0 = <&uart0_pins_a>;
 +	status = "okay";
 +};
 +
@@ -387,12 +387,6 @@ index 000000000..e595f64c6
 +			"PD24", "PD25", "PD26", "PD27";
 +		function = "lcd0";
 +	};
-+};
-+
-+&pwm {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pwm0_pin>;
-+	status = "okay";
 +};
 +
 +&tcon0_out {
