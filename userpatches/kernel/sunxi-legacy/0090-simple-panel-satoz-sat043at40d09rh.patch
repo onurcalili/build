@@ -1,0 +1,44 @@
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 654fea2b4..6868a4890 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2348,6 +2348,29 @@ static const struct panel_desc winstar_wf35ltiacd = {
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+ };
++ 
++static const struct drm_display_mode satoz_sat043at40d09rh_mode = {
++	.clock = 9000,
++	.hdisplay = 480,
++	.hsync_start = 480 + 8,
++	.hsync_end = 480 + 8 + 39,
++	.htotal = 480 + 8 + 39 + 4,
++	.vdisplay = 272,
++	.vsync_start = 272 + 8,
++	.vsync_end = 272 + 8 + 8,
++	.vtotal = 272 + 8 + 8 + 4,
++	.vrefresh = 60,
++};
++
++static const struct panel_desc satoz_sat043at40d09rh = {
++	.modes = &satoz_sat043at40d09rh_mode,
++	.num_modes = 1,
++	.size = {
++		.width = 95,
++		.height = 54,
++	},
++	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
++};
+ 
+ static const struct of_device_id platform_of_match[] = {
+ 	{
+@@ -2602,6 +2625,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "winstar,wf35ltiacd",
+ 		.data = &winstar_wf35ltiacd,
++	}, {
++		.compatible = "satoz,sat043at40d09rh",
++		.data = &satoz_sat043at40d09rh,
+ 	}, {
+ 		/* sentinel */
+ 	}
