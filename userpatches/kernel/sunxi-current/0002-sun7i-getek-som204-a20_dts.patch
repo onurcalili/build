@@ -1,6 +1,6 @@
 diff --git a/arch/arm/boot/dts/sun7i-getek-som204-a20.dts b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 000000000..8b919cc76
+index 000000000..17a2de076
 --- /dev/null
 +++ b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 @@ -0,0 +1,394 @@
@@ -284,11 +284,11 @@ index 000000000..8b919cc76
 +	};
 +};
 +
-+//&spi2_pc_pins {
-+//	/* Set current to 30mA */
-+//	allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
-+//	allwinner,drive = <SUN4I_PINCTRL_30_MA>;
-+//};
++&spi2_pc_pins {
++	/* Set current to 30mA */
++	allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
++	allwinner,drive = <SUN4I_PINCTRL_30_MA>;
++};
 +
 +&spi2_cs0_pc_pin {
 +	/* Increase current from to 30mA */
