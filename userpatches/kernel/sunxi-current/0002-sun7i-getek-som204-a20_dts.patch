@@ -1,6 +1,6 @@
 diff --git a/arch/arm/boot/dts/sun7i-getek-som204-a20.dts b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 000000000..f06d274b1
+index 000000000..4307b9eae
 --- /dev/null
 +++ b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 @@ -0,0 +1,387 @@
@@ -308,7 +308,7 @@ index 000000000..f06d274b1
 +	slb9670:slb9670@0 {
 +		compatible = "infineon,slb9670";
 +		reg = <0>;
-+		spi-max-frequency = <20000000>;
++		spi-max-frequency = <10000000>;
 +		status = "okay";
 +	};
 +};
