@@ -1,9 +1,9 @@
 diff --git a/arch/arm/boot/dts/sun7i-getek-som204-a20.dts b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
 new file mode 100644
-index 000000000..abed33b0a
+index 000000000..fc87eebf7
 --- /dev/null
 +++ b/arch/arm/boot/dts/sun7i-getek-som204-a20.dts
-@@ -0,0 +1,395 @@
+@@ -0,0 +1,387 @@
 +/dts-v1/;
 +#include "sun7i-a20.dtsi"
 +#include "sunxi-common-regulators.dtsi"
@@ -181,20 +181,13 @@ index 000000000..abed33b0a
 +	};
 +};
 +
-+&gmac {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac_pins_rgmii_a>;
-+	phy = <&phy3>;
-+	phy-mode = "rgmii";
-+	phy-supply = <&reg_vcc3v3>;
-+
-+	snps,reset-gpio = <&pio 0 17 GPIO_ACTIVE_HIGH>;
-+	snps,reset-active-low;
-+	snps,reset-delays-us = <0 10000 1000000>;
-+	status = "okay";
-+
++&gmac_mdio {
 +	phy3: ethernet-phy@3 {
 +		reg = <3>;
++		reset-gpios = <&pio 0 17 GPIO_ACTIVE_LOW>; /* PA17 */
++		reset-assert-us = <10000>;
++		/* wait 1s after reset, otherwise fail to read phy id */
++		reset-deassert-us = <1000000>;
 +	};
 +};
 +
@@ -277,8 +270,8 @@ index 000000000..abed33b0a
 +/* Exposed to UEXT1 */
 +&spi1 {
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&spi1_pins_a>,
-+		    <&spi1_cs0_pins_a>;
++	pinctrl-0 = <&spi1_pi_pins>,
++		    <&spi1_cs0_pi_pin>;
 +	status = "okay";
 +	#address-cells = <1>;
 +	#size-cells = <0>;
@@ -291,13 +284,13 @@ index 000000000..abed33b0a
 +	};
 +};
 +
-+&spi2_pins_a {
++&spi2_pc_pins {
 +	/* Set current to 30mA */
 +	allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
 +	allwinner,drive = <SUN4I_PINCTRL_30_MA>;
 +};
 +
-+&spi2_cs0_pins_a {
++&spi2_cs0_pc_pin {
 +	/* Increase current from to 30mA */
 +	allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
 +	allwinner,drive = <SUN4I_PINCTRL_30_MA>;
@@ -306,8 +299,8 @@ index 000000000..abed33b0a
 +/* Exposed to UEXT2 */
 +&spi2 {
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&spi2_pins_a>,
-+		    <&spi2_cs0_pins_a>;
++	pinctrl-0 = <&spi2_pc_pins>,
++		    <&spi2_cs0_pc_pin>;
 +	status = "okay";
 +	#address-cells = <1>;
 +	#size-cells = <0>;
@@ -315,21 +308,14 @@ index 000000000..abed33b0a
 +	slb9670:slb9670@0 {
 +		compatible = "infineon,slb9670";
 +		reg = <0>;
-+		spi-max-frequency = <1000000>;
++		spi-max-frequency = <5000000>;
 +		status = "okay";
 +	};
-+
-+//	spidev@0 {
-+//		compatible = "spidev";
-+//		reg = <0>;
-+//		spi-max-frequency = <100000000>;
-+//		status = "okay";
-+//	};
 +};
 +
 +&uart0 {
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&uart0_pins_a>;
++	pinctrl-0 = <&uart0_pb_pins>;
 +	status = "okay";
 +};
 +
@@ -343,8 +329,8 @@ index 000000000..abed33b0a
 +};
 +
 +&usbphy {
-+	usb0_id_det-gpios = <&pio 7 4 GPIO_ACTIVE_HIGH>; /* PH4 */
-+	usb0_vbus_det-gpios = <&pio 7 5 GPIO_ACTIVE_HIGH>; /* PH5 */
++	usb0_id_det-gpios = <&pio 7 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; /* PH4 */
++	usb0_vbus_det-gpios = <&pio 7 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; /* PH5 */
 +	usb0_vbus_power-supply = <&usb_power_supply>;
 +	usb0_vbus-supply = <&reg_usb0_vbus>;
 +	usb1_vbus-supply = <&reg_usb1_vbus>;
@@ -387,6 +373,12 @@ index 000000000..abed33b0a
 +			"PD24", "PD25", "PD26", "PD27";
 +		function = "lcd0";
 +	};
++};
++
++&pwm {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pwm0_pin>;
++	status = "okay";
 +};
 +
 +&tcon0_out {
