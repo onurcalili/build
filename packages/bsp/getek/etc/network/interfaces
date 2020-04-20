@@ -1,0 +1,17 @@
+source /etc/network/interfaces.d/*
+# Network is managed by Network manager
+auto lo
+iface lo inet loopback
+
+# Ethernet adapter 0
+auto eth0
+allow-hotplug eth0
+#no-auto-down eth0
+#iface eth0 inet dhcp
+iface eth0 inet static
+    address 192.168.1.100
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+    dns-nameservers 192.168.1.1
+    #dns-nameservers 1.1.1.1 1.0.0.1
+    hwaddress ether 00:11:22:33:44:55
