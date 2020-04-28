@@ -1,4 +1,5 @@
-verbosity=1
+verbosity=0
 logo=disabled
-console=both
-disp_mode=1920x1080p60
+console=serial
+disp_mode=640x480p60
+extraargs=quiet vt.global_cursor_default=0 splash plymouth.ignore-serial-consoles

@@ -1,0 +1,2 @@
+image = Image("getek.png");
+wallpaper_sprite = Sprite(image);

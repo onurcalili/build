@@ -1,0 +1,18 @@
+#!/bin/bash
+
+case "$1" in
+	start)
+
+	plymouth-set-default-theme getek
+	update-initramfs -u
+
+	esac
+	systemctl disable getek-firstrun
+	exit 0
+	;;
+
+	*)
+	echo "Usage: $0 start"
+	exit 0
+	;;
+esac

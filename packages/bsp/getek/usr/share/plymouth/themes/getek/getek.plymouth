@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=GETEK Image
+Description=Boot Splash Image
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/getek
+ScriptFile=/usr/share/plymouth/themes/getek/getek.script
